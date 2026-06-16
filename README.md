@@ -1,6 +1,6 @@
 # TesLang Compiler
 
-TesLang Compiler is a small educational compiler written in Go. It reads TesLang source from standard input, can print tokens, can run syntax and semantic checks, and can emit text TSVM-style intermediate code.
+TesLang Compiler is a small educational compiler written in Go. It can compile `.tes` files into text TSVM-style intermediate code, print tokens, and run syntax and semantic checks.
 
 ## Language Features
 
@@ -27,6 +27,7 @@ TesLang Compiler is a small educational compiler written in Go. It reads TesLang
 PowerShell:
 
 ```powershell
+go run ./cmd/teslang .\testdata\codegen_sample.tes
 Get-Content .\testdata\lexer_sample.tes | go run ./cmd/teslang --tokens
 Get-Content .\testdata\semantic_errors.tes | go run ./cmd/teslang --check
 Get-Content .\testdata\codegen_sample.tes | go run ./cmd/teslang --emit-tsvm
@@ -35,12 +36,24 @@ Get-Content .\testdata\codegen_sample.tes | go run ./cmd/teslang --emit-tsvm
 Linux, macOS, Command Prompt, and Git Bash:
 
 ```sh
+go run ./cmd/teslang testdata/codegen_sample.tes
 go run ./cmd/teslang --tokens < testdata/lexer_sample.tes
 go run ./cmd/teslang --check < testdata/semantic_errors.tes
 go run ./cmd/teslang --emit-tsvm < testdata/codegen_sample.tes
 ```
 
-Default mode is `--emit-tsvm`.
+Default mode is `--emit-tsvm`. When an input file is provided, the compiler writes a `.tsvm` file next to it.
+
+Useful file-based commands:
+
+```sh
+tesc hello.tes
+tesc -o build/hello.tsvm hello.tes
+tesc --out-dir build src/a.tes src/b.tes
+tesc --stdout hello.tes
+tesc --check src/a.tes src/b.tes
+tesc --tokens hello.tes
+```
 
 For detailed build, run, cross-compilation, and output-file instructions, see [RUNBOOK.md](RUNBOOK.md).
 
@@ -49,14 +62,14 @@ For detailed build, run, cross-compilation, and output-file instructions, see [R
 Build the compiler for the current operating system:
 
 ```sh
-go build -o bin/teslang ./cmd/teslang
+go build -o bin/tesc ./cmd/teslang
 ```
 
 On Windows PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force .\bin | Out-Null
-go build -o .\bin\teslang.exe .\cmd\teslang
+go build -o .\bin\tesc.exe .\cmd\teslang
 ```
 
 Generated binaries are written to `bin/`. Cross-compiled release binaries can be written to `dist/`; both directories are ignored by Git.

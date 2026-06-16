@@ -10,6 +10,8 @@ out/
 *.dylib
 *.test
 *.out
+/tesc
+/teslang
 
 # Go tooling and coverage
 coverage/
@@ -48,4 +50,3 @@ Desktop.ini
 *.temp
 tmp/
 temp/
-
