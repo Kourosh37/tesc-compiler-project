@@ -1,0 +1,51 @@
+# Go build artifacts
+bin/
+build/
+dist/
+out/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go tooling and coverage
+coverage/
+coverage.out
+coverage.html
+*.cover
+*.prof
+cpu.out
+mem.out
+
+# TesLang / TSVM generated outputs
+*.tsvm
+*.tokens
+*.diag
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Editor and IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+

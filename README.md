@@ -24,13 +24,42 @@ TesLang Compiler is a small educational compiler written in Go. It reads TesLang
 
 ## Run
 
+PowerShell:
+
 ```powershell
+Get-Content .\testdata\lexer_sample.tes | go run ./cmd/teslang --tokens
+Get-Content .\testdata\semantic_errors.tes | go run ./cmd/teslang --check
+Get-Content .\testdata\codegen_sample.tes | go run ./cmd/teslang --emit-tsvm
+```
+
+Linux, macOS, Command Prompt, and Git Bash:
+
+```sh
 go run ./cmd/teslang --tokens < testdata/lexer_sample.tes
 go run ./cmd/teslang --check < testdata/semantic_errors.tes
 go run ./cmd/teslang --emit-tsvm < testdata/codegen_sample.tes
 ```
 
 Default mode is `--emit-tsvm`.
+
+For detailed build, run, cross-compilation, and output-file instructions, see [RUNBOOK.md](RUNBOOK.md).
+
+## Build
+
+Build the compiler for the current operating system:
+
+```sh
+go build -o bin/teslang ./cmd/teslang
+```
+
+On Windows PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force .\bin | Out-Null
+go build -o .\bin\teslang.exe .\cmd\teslang
+```
+
+Generated binaries are written to `bin/`. Cross-compiled release binaries can be written to `dist/`; both directories are ignored by Git.
 
 ## Test
 
