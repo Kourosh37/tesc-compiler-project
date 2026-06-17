@@ -59,7 +59,18 @@ For detailed build, run, cross-compilation, and output-file instructions, see [R
 
 ## Build
 
-Build the compiler for the current operating system:
+Build with scripts:
+
+```powershell
+.\scripts\build-windows.ps1
+```
+
+```sh
+./scripts/build-linux.sh
+./scripts/build-macos.sh
+```
+
+Or build manually:
 
 ```sh
 go build -o bin/tesc ./cmd/teslang

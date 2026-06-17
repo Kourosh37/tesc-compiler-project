@@ -75,8 +75,7 @@ go run ./cmd/teslang --emit-tsvm < hello.tes > hello.tsvm
 ### Windows
 
 ```powershell
-New-Item -ItemType Directory -Force .\bin | Out-Null
-go build -o .\bin\tesc.exe .\cmd\teslang
+.\scripts\build-windows.ps1
 ```
 
 Run built compiler:
@@ -89,8 +88,8 @@ Run built compiler:
 ### Linux/macOS
 
 ```sh
-mkdir -p bin
-go build -o bin/tesc ./cmd/teslang
+./scripts/build-linux.sh
+./scripts/build-macos.sh
 ```
 
 Run built compiler:
