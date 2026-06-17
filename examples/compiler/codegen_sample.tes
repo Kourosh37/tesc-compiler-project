@@ -1,0 +1,33 @@
+</
+    Code Generation Sample
+
+    This file is a compact valid program used to demonstrate the full pipeline:
+    lexer -> parser -> semantic analyzer -> TESVM code generator -> TESVM runtime.
+
+    It reads two integers, calls add(a, b), prints the result, and returns 0.
+/>
+
+</ add is a normal user-defined function with two initialized int parameters. />
+funk <int> add(a as int, b as int)
+{
+    </ Local variable with initializer. Codegen should emit an add instruction. />
+    result :: int = a + b;
+    return result;
+}
+
+</ main is the default entry point used by tes and tesvm. />
+funk <null> main()
+{
+    </ Declared without initializers, so they must be assigned before being read. />
+    a :: int;
+    b :: int;
+
+    </ scan() reads integer input from the terminal. />
+    a = scan();
+    b = scan();
+
+    </ Function call result is passed to print(). />
+    print(add(a, b));
+
+    return 0;
+}

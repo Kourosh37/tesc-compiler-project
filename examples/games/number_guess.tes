@@ -1,5 +1,20 @@
+</
+    Number Guess
+
+    A small terminal game for demonstrating:
+    - random(min, max) for unpredictable gameplay
+    - scan() for numeric user input
+    - while loops for a repeated game turn
+    - bool state with the won flag
+    - nested if/else blocks for game feedback
+
+    Goal:
+    Guess the secret random number between 1 and 100 in at most 7 attempts.
+/>
+
 funk <null> main()
 {
+    </ Game state. The secret is generated once at startup. />
     secret :: int = random(1, 100);
     maxAttempts :: int = 7;
     attempts :: int = 0;
@@ -14,12 +29,14 @@ funk <null> main()
     print("Enter one integer per guess.");
     print("----------------------------------------");
 
+    </ Main game loop: keep asking while attempts remain and the player has not won. />
     while [[ attempts < maxAttempts && !won ]]
     begin
         print("Guess now:");
         guess = scan();
         attempts = attempts + 1;
 
+        </ Validate range first, then compare the guess with the secret. />
         if [[ guess < 1 || guess > 100 ]]
         begin
             print("Out of range. Stay between 1 and 100.");
@@ -50,6 +67,7 @@ funk <null> main()
 
         if [[ !won && attempts < maxAttempts ]]
         begin
+            </ Show progress only if the game is still active. />
             print("Attempts used:");
             print(attempts);
             print("Attempts left:");
@@ -58,6 +76,7 @@ funk <null> main()
         endif
     endwhile
 
+    </ Final result screen. />
     if [[ won ]]
     begin
         print("========================================");

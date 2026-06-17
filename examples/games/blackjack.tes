@@ -1,0 +1,94 @@
+</
+    TES Blackjack
+
+    A compact card game demonstrating:
+    - helper functions
+    - random card drawing
+    - while loops
+    - user choices with scan()
+    - comparison-heavy win/loss logic
+
+    Card model:
+    Cards are simplified to random values from 1 to 10.
+/>
+
+</ Draw a simplified card value. />
+funk <int> drawCard()
+{
+    return random(1, 10);
+}
+
+funk <null> main()
+{
+    </ Initial hands. Both player and dealer receive two cards. />
+    player :: int = drawCard() + drawCard();
+    dealer :: int = drawCard() + drawCard();
+    choice :: int = 0;
+    playing :: bool = true;
+
+    print("========================================");
+    print("              TES BLACKJACK             ");
+    print("========================================");
+    print("Get as close to 21 as possible.");
+
+    </ Player turn: hit until standing or busting. />
+    while [[ playing && player < 21 ]]
+    begin
+        print("Your total:");
+        print(player);
+        print("Dealer shows:");
+        print(dealer);
+        print("1 = Hit");
+        print("2 = Stand");
+        choice = scan();
+
+        if [[ choice == 1 ]]
+        begin
+            player = player + drawCard();
+        else
+            if [[ choice == 2 ]]
+            begin
+                playing = false;
+            else
+                print("Choose 1 or 2.");
+            endif
+        endif
+    endwhile
+
+    </ Dealer turn: dealer draws until reaching at least 17. />
+    while [[ dealer < 17 && player <= 21 ]]
+    begin
+        dealer = dealer + drawCard();
+    endwhile
+
+    print("========================================");
+    print("Final player total:");
+    print(player);
+    print("Final dealer total:");
+    print(dealer);
+
+    </ Resolve the result after both turns. />
+    if [[ player > 21 ]]
+    begin
+        print("Bust. Dealer wins.");
+    else
+        if [[ dealer > 21 ]]
+        begin
+            print("Dealer busts. You win.");
+        else
+            if [[ player > dealer ]]
+            begin
+                print("You win.");
+            else
+                if [[ player == dealer ]]
+                begin
+                    print("Push. It is a tie.");
+                else
+                    print("Dealer wins.");
+                endif
+            endif
+        endif
+    endif
+
+    return 0;
+}

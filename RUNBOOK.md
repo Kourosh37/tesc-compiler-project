@@ -35,15 +35,15 @@ go run ./cmd/teslang --tokens .\hello.tes
 Stdin still works:
 
 ```powershell
-Get-Content .\testdata\codegen_sample.tes | go run ./cmd/teslang --tokens
-Get-Content .\testdata\codegen_sample.tes | go run ./cmd/teslang --check
-Get-Content .\testdata\codegen_sample.tes | go run ./cmd/teslang --emit-tesvm
+Get-Content .\examples\compiler\codegen_sample.tes | go run ./cmd/teslang --tokens
+Get-Content .\examples\compiler\codegen_sample.tes | go run ./cmd/teslang --check
+Get-Content .\examples\compiler\codegen_sample.tes | go run ./cmd/teslang --emit-tesvm
 ```
 
 Run generated TESVM from source:
 
 ```powershell
-"5`n7`n" | go run ./cmd/tesvm .\target\tesvm\testdata\codegen_sample.tesvm
+"5`n7`n" | go run ./cmd/tesvm .\target\tesvm\examples\compiler\codegen_sample.tesvm
 ```
 
 Save generated TESVM:
@@ -67,15 +67,15 @@ go run ./cmd/teslang --tokens hello.tes
 Stdin still works:
 
 ```sh
-go run ./cmd/teslang --tokens < testdata/codegen_sample.tes
-go run ./cmd/teslang --check < testdata/codegen_sample.tes
-go run ./cmd/teslang --emit-tesvm < testdata/codegen_sample.tes
+go run ./cmd/teslang --tokens < examples/compiler/codegen_sample.tes
+go run ./cmd/teslang --check < examples/compiler/codegen_sample.tes
+go run ./cmd/teslang --emit-tesvm < examples/compiler/codegen_sample.tes
 ```
 
 Run generated TESVM from source:
 
 ```sh
-printf "5\n7\n" | go run ./cmd/tesvm ./target/tesvm/testdata/codegen_sample.tesvm
+printf "5\n7\n" | go run ./cmd/tesvm ./target/tesvm/examples/compiler/codegen_sample.tesvm
 ```
 
 Save generated TESVM:

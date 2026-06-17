@@ -28,19 +28,19 @@ TesLang Compiler is a small educational compiler written in Go. It can compile `
 PowerShell:
 
 ```powershell
-go run ./cmd/teslang .\testdata\codegen_sample.tes
-Get-Content .\testdata\lexer_sample.tes | go run ./cmd/teslang --tokens
-Get-Content .\testdata\semantic_errors.tes | go run ./cmd/teslang --check
-Get-Content .\testdata\codegen_sample.tes | go run ./cmd/teslang --emit-tesvm
+go run ./cmd/teslang .\examples\compiler\codegen_sample.tes
+Get-Content .\examples\compiler\lexer_sample.tes | go run ./cmd/teslang --tokens
+Get-Content .\examples\compiler\semantic_errors.tes | go run ./cmd/teslang --check
+Get-Content .\examples\compiler\codegen_sample.tes | go run ./cmd/teslang --emit-tesvm
 ```
 
 Linux, macOS, Command Prompt, and Git Bash:
 
 ```sh
-go run ./cmd/teslang testdata/codegen_sample.tes
-go run ./cmd/teslang --tokens < testdata/lexer_sample.tes
-go run ./cmd/teslang --check < testdata/semantic_errors.tes
-go run ./cmd/teslang --emit-tesvm < testdata/codegen_sample.tes
+go run ./cmd/teslang examples/compiler/codegen_sample.tes
+go run ./cmd/teslang --tokens < examples/compiler/lexer_sample.tes
+go run ./cmd/teslang --check < examples/compiler/semantic_errors.tes
+go run ./cmd/teslang --emit-tesvm < examples/compiler/codegen_sample.tes
 ```
 
 Default mode is `--emit-tesvm`. When an input file is provided, the compiler writes generated TESVM under `target/tesvm`.

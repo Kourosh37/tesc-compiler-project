@@ -1,0 +1,106 @@
+</
+    Hangman Lite
+
+    TesLang currently reads integer input with scan(), so this game uses
+    letter numbers instead of raw character input:
+
+    A=1, B=2, C=3, ..., T=20, E=5, S=19
+
+    The hidden word is TES.
+    This example demonstrates vector state, index assignment, logical AND,
+    and a while loop with a solved flag.
+/>
+
+</ Prints each letter slot. found[i] == 1 means the letter has been guessed. />
+funk <int> showBoard(found as vector)
+{
+    print("Word:");
+
+    if [[ found[0] == 1 ]]
+    begin
+        print("T");
+    else
+        print("_");
+    endif
+
+    if [[ found[1] == 1 ]]
+    begin
+        print("E");
+    else
+        print("_");
+    endif
+
+    if [[ found[2] == 1 ]]
+    begin
+        print("S");
+    else
+        print("_");
+    endif
+
+    return 0;
+}
+
+funk <null> main()
+{
+    </ found has one slot per letter: T, E, S. />
+    found :: vector = list(3);
+    guess :: int = 0;
+    misses :: int = 0;
+    solved :: bool = false;
+
+    print("========================================");
+    print("              HANGMAN LITE              ");
+    print("========================================");
+    print("Guess the word TES.");
+    print("Use letter numbers: A=1, B=2, ..., Z=26.");
+    print("You can miss 6 times.");
+
+    </ Continue until the word is solved or the player misses too many times. />
+    while [[ !solved && misses < 6 ]]
+    begin
+        showBoard(found);
+        print("Guess a letter number:");
+        guess = scan();
+
+        if [[ guess == 20 ]]
+        begin
+            </ T is the first letter. />
+            found[0] = 1;
+            print("Found T.");
+        else
+            if [[ guess == 5 ]]
+            begin
+                </ E is the second letter. />
+                found[1] = 1;
+                print("Found E.");
+            else
+                if [[ guess == 19 ]]
+                begin
+                    </ S is the third letter. />
+                    found[2] = 1;
+                    print("Found S.");
+                else
+                    misses = misses + 1;
+                    print("Misses:");
+                    print(misses);
+                endif
+            endif
+        endif
+
+        </ The word is solved when all vector slots are marked as found. />
+        if [[ found[0] == 1 && found[1] == 1 && found[2] == 1 ]]
+        begin
+            solved = true;
+        endif
+    endwhile
+
+    print("========================================");
+    if [[ solved ]]
+    begin
+        print("You solved it: TES");
+    else
+        print("Game over. The word was TES.");
+    endif
+
+    return 0;
+}

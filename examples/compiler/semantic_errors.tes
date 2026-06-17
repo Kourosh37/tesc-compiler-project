@@ -1,0 +1,65 @@
+</
+    Semantic Error Sample
+
+    This file is intentionally invalid.
+    It exists to demonstrate semantic diagnostics.
+
+    Expected errors include:
+    - uninitialized variable usage
+    - undefined variable usage
+    - assigning vector to int
+    - indexing a non-vector
+    - wrong function argument count
+    - wrong function argument type
+    - wrong return type
+
+    Do not use this as a runnable program.
+    Use it with:
+
+        tesc --check examples/compiler/semantic_errors.tes
+/>
+
+funk <int> find(A as vector, n as int)
+{
+    </ k and j are declared but not initialized before some reads. />
+    k :: int;
+    j :: int;
+
+    for (i = 0 to length(A))
+    begin
+        if [[ n == k ]]
+        begin
+            </ j is returned before assignment, which should be reported. />
+            return j;
+        endif
+
+        </ x is not declared anywhere, so this should be reported. />
+        j = x + 1;
+    endfor
+
+    return -1;
+}
+
+funk <null> main()
+{
+    </ A is declared as int, but later receives list(3), which returns vector. />
+    A :: int;
+
+    </ a is declared but never initialized before being passed to find. />
+    a :: int;
+
+    A = list(3);
+
+    </ A is int, not vector, so every index assignment should be reported. />
+    A[0] = 1;
+    A[1] = 2;
+    A[2] = 3;
+
+    </ These calls exercise argument type and argument count diagnostics. />
+    print(find(A, a));
+    print(find(A));
+    print(find(a, A));
+
+    </ main is null-returning, so returning A is invalid. />
+    return A;
+}

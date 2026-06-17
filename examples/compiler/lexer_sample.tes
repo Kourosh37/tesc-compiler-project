@@ -1,0 +1,42 @@
+</
+    Lexer Sample
+
+    This file is intentionally small and is used to demonstrate lexer behavior.
+
+    It shows:
+    - function declarations
+    - vector parameters
+    - variable declarations
+    - integer literals
+    - nested block comments
+    - for loops
+    - function calls
+    - vector indexing
+
+    The comment below is important: the lexer must ignore every token inside it,
+    including the nested comment. Only the real TesLang code should produce tokens.
+/>
+
+funk <int> sum(numlist as vector) {
+    </ result accumulates the sum of all vector elements. />
+    result :: int = 0;
+
+    </
+        Nested comment test:
+        the lexer should enter comment mode here,
+        increase depth for the inner comment,
+        then return to normal lexing after the outer comment closes.
+    />
+    </ outer comment
+        </ nested comment />
+       still comment
+    />
+
+    </ Iterate from 0 to length(numlist) - 1 and add each item. />
+    for (i = 0 to length(numlist))
+    begin
+        result = result + numlist[i];
+    endfor
+
+    return result;
+}

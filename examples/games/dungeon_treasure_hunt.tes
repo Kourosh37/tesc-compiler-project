@@ -1,0 +1,180 @@
+</
+    Dungeon Treasure Hunt
+
+    A text adventure showing a larger TesLang program with:
+    - helper functions
+    - random events
+    - game state variables
+    - nested if/else decision trees
+    - while loops
+    - function calls with arguments
+
+    Goal:
+    Explore the dungeon, collect at least 100 gold, and escape before turn 15.
+/>
+
+</ showStatus prints all important player state in one place. />
+funk <int> showStatus(health as int, gold as int, potions as int, turn as int)
+{
+    print("---------- STATUS ----------");
+    print("Health:");
+    print(health);
+    print("Gold:");
+    print(gold);
+    print("Potions:");
+    print(potions);
+    print("Turn:");
+    print(turn);
+    print("----------------------------");
+    return 0;
+}
+
+</ heal returns a capped health value after using a potion. />
+funk <int> heal(health as int)
+{
+    newHealth :: int = health + random(18, 30);
+
+    if [[ newHealth > 100 ]]
+    begin
+        newHealth = 100;
+    endif
+
+    return newHealth;
+}
+
+funk <null> main()
+{
+    </ Core game state. These variables are updated every turn. />
+    health :: int = 100;
+    gold :: int = 0;
+    potions :: int = 2;
+    turn :: int = 0;
+    choice :: int = 0;
+    event :: int = 0;
+    amount :: int = 0;
+    alive :: bool = true;
+    escaped :: bool = false;
+
+    print("========================================");
+    print("          DUNGEON TREASURE HUNT         ");
+    print("========================================");
+    print("Goal: escape with 100 gold before turn 15.");
+
+    </ The game continues while the player is alive, has not escaped, and still has turns. />
+    while [[ alive && !escaped && turn < 15 ]]
+    begin
+        print("");
+        print("Choose:");
+        print("1 = Explore");
+        print("2 = Rest");
+        print("3 = Use potion");
+        print("4 = Show status");
+        print("5 = Escape attempt");
+        choice = scan();
+
+        if [[ choice == 1 ]]
+        begin
+            </ Explore consumes a turn and triggers one random event. />
+            turn = turn + 1;
+            event = random(1, 4);
+
+            if [[ event == 1 ]]
+            begin
+                amount = random(15, 35);
+                gold = gold + amount;
+                print("You found gold:");
+                print(amount);
+            else
+                if [[ event == 2 ]]
+                begin
+                    amount = random(10, 25);
+                    health = health - amount;
+                    print("A monster hit you for:");
+                    print(amount);
+                else
+                    if [[ event == 3 ]]
+                    begin
+                        potions = potions + 1;
+                        print("You found a healing potion.");
+                    else
+                        amount = random(8, 18);
+                        health = health - amount;
+                        print("A trap caught you for:");
+                        print(amount);
+                    endif
+                endif
+            endif
+        else
+            if [[ choice == 2 ]]
+            begin
+                </ Resting is safer than exploring but still costs a turn. />
+                turn = turn + 1;
+                amount = random(5, 15);
+                health = health + amount;
+
+                if [[ health > 100 ]]
+                begin
+                    health = 100;
+                endif
+
+                print("You rested and recovered:");
+                print(amount);
+            else
+                if [[ choice == 3 ]]
+                begin
+                    </ Potions are limited; heal() caps health at 100. />
+                    if [[ potions > 0 ]]
+                    begin
+                        potions = potions - 1;
+                        health = heal(health);
+                        print("Potion used. Health is now:");
+                        print(health);
+                    else
+                        print("No potions left.");
+                    endif
+                else
+                    if [[ choice == 4 ]]
+                    begin
+                        showStatus(health, gold, potions, turn);
+                    else
+                        if [[ choice == 5 ]]
+                        begin
+                            </ The player can only escape after collecting enough gold. />
+                            if [[ gold >= 100 ]]
+                            begin
+                                escaped = true;
+                            else
+                                print("The gate demands at least 100 gold.");
+                            endif
+                        else
+                            print("Unknown command.");
+                        endif
+                    endif
+                endif
+            endif
+        endif
+
+        </ Death check after each action. />
+        if [[ health <= 0 ]]
+        begin
+            alive = false;
+        endif
+    endwhile
+
+    </ End screen based on why the loop stopped. />
+    print("========================================");
+    if [[ escaped ]]
+    begin
+        print("You escaped the dungeon rich and alive.");
+    else
+        if [[ alive ]]
+        begin
+            print("Time ran out. The dungeon seals itself.");
+        else
+            print("You fell in the dungeon.");
+        endif
+    endif
+
+    showStatus(health, gold, potions, turn);
+    return 0;
+}

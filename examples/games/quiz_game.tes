@@ -1,0 +1,112 @@
+</
+    TES Quiz Game
+
+    A multiple-choice quiz demonstrating:
+    - vector literals
+    - for loops
+    - indexing with answers[i]
+    - helper functions
+    - score tracking
+
+    Input:
+    Each answer is a number from 1 to 4.
+/>
+
+</ Prints a question by numeric index. Returns 0 because helper functions cannot be null-returning with return 0. />
+funk <int> askQuestion(n as int)
+{
+    if [[ n == 0 ]]
+    begin
+        print("Question 1: Which number is even?");
+        print("1 = 7");
+        print("2 = 8");
+        print("3 = 9");
+        print("4 = 11");
+    else
+        if [[ n == 1 ]]
+        begin
+            print("Question 2: 5 + 6 = ?");
+            print("1 = 9");
+            print("2 = 10");
+            print("3 = 11");
+            print("4 = 12");
+        else
+            if [[ n == 2 ]]
+            begin
+                print("Question 3: Which command reads an int?");
+                print("1 = scan");
+                print("2 = print");
+                print("3 = list");
+                print("4 = exit");
+            else
+                if [[ n == 3 ]]
+                begin
+                    print("Question 4: Which type is an array of int?");
+                    print("1 = str");
+                    print("2 = mstr");
+                    print("3 = bool");
+                    print("4 = vector");
+                else
+                    print("Question 5: Which tool runs .tes files directly?");
+                    print("1 = tesvm");
+                    print("2 = tes");
+                    print("3 = tesc");
+                    print("4 = random");
+                endif
+            endif
+        endif
+    endif
+
+    return 0;
+}
+
+funk <null> main()
+{
+    </ Correct answers for all five questions. vectors store integers in TesLang. />
+    answers :: vector = [2, 3, 1, 4, 2];
+    score :: int = 0;
+    guess :: int = 0;
+
+    print("========================================");
+    print("              TES QUIZ GAME             ");
+    print("========================================");
+
+    </ Ask every question by iterating over the answers vector. />
+    for (i = 0 to length(answers))
+    begin
+        askQuestion(i);
+        guess = scan();
+
+        if [[ guess == answers[i] ]]
+        begin
+            </ Correct answer increases the score. />
+            print("Correct.");
+            score = score + 1;
+        else
+            print("Wrong. Correct answer:");
+            print(answers[i]);
+        endif
+
+        print("----------------------------------------");
+    endfor
+
+    print("Final score:");
+    print(score);
+    print("Out of:");
+    print(length(answers));
+
+    </ Final grading. />
+    if [[ score == length(answers) ]]
+    begin
+        print("Perfect.");
+    else
+        if [[ score >= 3 ]]
+        begin
+            print("Good run.");
+        else
+            print("Try again.");
+        endif
+    endif
+
+    return 0;
+}

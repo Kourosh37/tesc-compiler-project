@@ -1,0 +1,153 @@
+</
+    TES Battle Arena
+
+    A turn-based combat game demonstrating:
+    - multiple helper functions
+    - random damage
+    - nested loops
+    - persistent player state
+    - early return to quit the game
+
+    Goal:
+    Defeat three enemies before the hero's health reaches zero.
+/>
+
+</ Reliable low-risk attack. />
+funk <int> lightAttack()
+{
+    return random(8, 16);
+}
+
+</ High-risk attack. It can miss, but it can also deal high damage. />
+funk <int> heavyAttack()
+{
+    hit :: int = random(1, 100);
+
+    if [[ hit <= 65 ]]
+    begin
+        return random(18, 34);
+    endif
+
+    return 0;
+}
+
+funk <null> main()
+{
+    </ Hero and arena state. />
+    heroHealth :: int = 100;
+    enemyHealth :: int = 0;
+    potions :: int = 3;
+    enemy :: int = 1;
+    choice :: int = 0;
+    damage :: int = 0;
+    alive :: bool = true;
+
+    print("========================================");
+    print("            TES BATTLE ARENA            ");
+    print("========================================");
+    print("Defeat 3 enemies. Survive the arena.");
+
+    </ Outer loop: one enemy at a time. />
+    while [[ alive && enemy <= 3 ]]
+    begin
+        enemyHealth = 45 + enemy * 15;
+        print("----------------------------------------");
+        print("Enemy number:");
+        print(enemy);
+        print("Enemy health:");
+        print(enemyHealth);
+
+        </ Inner loop: combat rounds against the current enemy. />
+        while [[ alive && enemyHealth > 0 ]]
+        begin
+            print("Choose:");
+            print("1 = Light attack");
+            print("2 = Heavy attack");
+            print("3 = Use potion");
+            print("4 = Run");
+            choice = scan();
+
+            if [[ choice == 1 ]]
+            begin
+                </ Light attack always deals damage. />
+                damage = lightAttack();
+                enemyHealth = enemyHealth - damage;
+                print("You hit for:");
+                print(damage);
+            else
+                if [[ choice == 2 ]]
+                begin
+                    </ Heavy attack can miss. A miss is represented by damage == 0. />
+                    damage = heavyAttack();
+                    if [[ damage == 0 ]]
+                    begin
+                        print("Heavy attack missed.");
+                    else
+                        enemyHealth = enemyHealth - damage;
+                        print("Heavy attack hit for:");
+                        print(damage);
+                    endif
+                else
+                    if [[ choice == 3 ]]
+                    begin
+                        </ Potions are limited and cap health at 100. />
+                        if [[ potions > 0 ]]
+                        begin
+                            potions = potions - 1;
+                            heroHealth = heroHealth + random(20, 35);
+                            if [[ heroHealth > 100 ]]
+                            begin
+                                heroHealth = 100;
+                            endif
+                            print("Potion used. Hero health:");
+                            print(heroHealth);
+                        else
+                            print("No potions left.");
+                        endif
+                    else
+                        if [[ choice == 4 ]]
+                        begin
+                            </ Demonstrates early return from main. />
+                            print("You escaped the arena.");
+                            return 0;
+                        else
+                            print("Unknown command.");
+                        endif
+                    endif
+                endif
+            endif
+
+            if [[ enemyHealth > 0 ]]
+            begin
+                </ Enemy counterattack happens only if it survived the player's action. />
+                damage = random(7, 18);
+                heroHealth = heroHealth - damage;
+                print("Enemy hits you for:");
+                print(damage);
+                print("Hero health:");
+                print(heroHealth);
+            endif
+
+            if [[ heroHealth <= 0 ]]
+            begin
+                alive = false;
+            endif
+        endwhile
+
+        if [[ alive ]]
+        begin
+            print("Enemy defeated.");
+            enemy = enemy + 1;
+        endif
+    endwhile
+
+    print("========================================");
+    if [[ alive ]]
+    begin
+        print("Champion. You cleared the arena.");
+    else
+        print("You were defeated.");
+    endif
+
+    return 0;
+}
