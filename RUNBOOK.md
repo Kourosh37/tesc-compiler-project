@@ -88,6 +88,7 @@ go run ./cmd/teslang --emit-tsvm < hello.tes > hello.tsvm
 
 ```powershell
 .\scripts\build-windows.ps1
+.\scripts\build-vm-windows.ps1
 ```
 
 Run built compiler:
@@ -103,6 +104,8 @@ Run built compiler:
 ```sh
 ./scripts/build-linux.sh
 ./scripts/build-macos.sh
+./scripts/build-vm-linux.sh
+./scripts/build-vm-macos.sh
 ```
 
 Run built compiler:

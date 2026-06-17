@@ -65,11 +65,14 @@ Build with scripts:
 
 ```powershell
 .\scripts\build-windows.ps1
+.\scripts\build-vm-windows.ps1
 ```
 
 ```sh
 ./scripts/build-linux.sh
 ./scripts/build-macos.sh
+./scripts/build-vm-linux.sh
+./scripts/build-vm-macos.sh
 ```
 
 Or build manually:
