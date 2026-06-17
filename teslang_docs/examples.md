@@ -154,3 +154,13 @@ funk <null> main()
 }
 ```
 
+## Random Number
+
+```tes
+funk <null> main()
+{
+    secret :: int = random(1, 100);
+    print(secret);
+    return 0;
+}
+```

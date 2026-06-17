@@ -87,3 +87,15 @@ proc main
 		t.Fatalf("out=%q", out)
 	}
 }
+
+func TestVMRandom(t *testing.T) {
+	out, _ := runProgram(t, `
+proc main
+  call random, r1, 1, 1
+  call log, r1
+  ret
+`, "")
+	if out != "1\n" {
+		t.Fatalf("out=%q", out)
+	}
+}

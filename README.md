@@ -11,7 +11,7 @@ TesLang Compiler is a small educational compiler written in Go. It can compile `
 - Nested functions
 - Integer arithmetic, comparisons, logical operators, ternary expressions
 - Vector literals and indexing
-- Built-ins: `scan`, `print`, `list`, `length`, `exit`
+- Built-ins: `scan`, `print`, `list`, `length`, `random`, `exit`
 
 ## Compiler Pipeline
 

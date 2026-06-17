@@ -34,6 +34,7 @@ func (a *Analyzer) builtins(s *Scope) {
 	add("print", ast.TypeNull, ParamSymbol{Name: "x", Type: ast.TypeUnknown})
 	add("list", ast.TypeVector, ParamSymbol{Name: "n", Type: ast.TypeInt})
 	add("length", ast.TypeInt, ParamSymbol{Name: "arr", Type: ast.TypeVector})
+	add("random", ast.TypeInt, ParamSymbol{Name: "min", Type: ast.TypeInt}, ParamSymbol{Name: "max", Type: ast.TypeInt})
 	add("exit", ast.TypeNull, ParamSymbol{Name: "n", Type: ast.TypeInt})
 }
 func (a *Analyzer) declareFunction(s *Scope, f *ast.FunctionDecl) {

@@ -4,8 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type VM struct {
@@ -15,6 +17,7 @@ type VM struct {
 	trace   bool
 	exited  bool
 	code    int
+	rng     *rand.Rand
 }
 
 type Option func(*VM)
@@ -38,7 +41,7 @@ func WithTrace(enabled bool) Option {
 }
 
 func NewVM(program *Program, opts ...Option) *VM {
-	vm := &VM{program: program, in: bufio.NewReader(strings.NewReader("")), out: io.Discard}
+	vm := &VM{program: program, in: bufio.NewReader(strings.NewReader("")), out: io.Discard, rng: rand.New(rand.NewSource(time.Now().UnixNano()))}
 	for _, opt := range opts {
 		opt(vm)
 	}
@@ -242,6 +245,16 @@ func (vm *VM) execCall(fr *frame, ops []string) error {
 			return fmt.Errorf("length target is not a vector")
 		}
 		fr.set(ops[1], Int(len(vec.Vector)))
+	case "random":
+		if len(ops) != 4 {
+			return fmt.Errorf("call random expects destination, min, and max")
+		}
+		minValue := fr.value(ops[2]).asInt()
+		maxValue := fr.value(ops[3]).asInt()
+		if minValue > maxValue {
+			return fmt.Errorf("random min must be less than or equal to max")
+		}
+		fr.set(ops[1], Int(vm.rng.Intn(maxValue-minValue+1)+minValue))
 	default:
 		if len(ops) < 2 {
 			return fmt.Errorf("user call requires destination register")

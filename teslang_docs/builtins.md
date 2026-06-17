@@ -80,6 +80,27 @@ Type:
 length(arr: vector) -> int
 ```
 
+## random
+
+Returns a random integer in an inclusive range.
+
+```tes
+secret :: int = random(1, 100);
+```
+
+Type:
+
+```text
+random(min: int, max: int) -> int
+```
+
+Rules:
+
+- `min` must be `int`.
+- `max` must be `int`.
+- `min` must be less than or equal to `max`.
+- The result can be equal to `min` or `max`.
+
 ## exit
 
 Stops the VM with an exit code.
@@ -93,4 +114,3 @@ Type:
 ```text
 exit(n: int) -> null
 ```
-

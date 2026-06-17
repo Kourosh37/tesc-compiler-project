@@ -1,0 +1,73 @@
+funk <null> main()
+{
+    secret :: int = random(1, 100);
+    maxAttempts :: int = 7;
+    attempts :: int = 0;
+    guess :: int = 0;
+    won :: bool = false;
+
+    print("========================================");
+    print("          TESLANG NUMBER QUEST          ");
+    print("========================================");
+    print("I picked a secret number from 1 to 100.");
+    print("You have 7 attempts to find it.");
+    print("Enter one integer per guess.");
+    print("----------------------------------------");
+
+    while [[ attempts < maxAttempts && !won ]]
+    begin
+        print("Guess now:");
+        guess = scan();
+        attempts = attempts + 1;
+
+        if [[ guess < 1 || guess > 100 ]]
+        begin
+            print("Out of range. Stay between 1 and 100.");
+        else
+            if [[ guess == secret ]]
+            begin
+                won = true;
+                print("Correct. You found the secret number.");
+            else
+                if [[ guess < secret ]]
+                begin
+                    print("Too low.");
+
+                    if [[ secret - guess <= 5 ]]
+                    begin
+                        print("You are very close.");
+                    endif
+                else
+                    print("Too high.");
+
+                    if [[ guess - secret <= 5 ]]
+                    begin
+                        print("You are very close.");
+                    endif
+                endif
+            endif
+        endif
+
+        if [[ !won && attempts < maxAttempts ]]
+        begin
+            print("Attempts used:");
+            print(attempts);
+            print("Attempts left:");
+            print(maxAttempts - attempts);
+            print("----------------------------------------");
+        endif
+    endwhile
+
+    if [[ won ]]
+    begin
+        print("========================================");
+        print("Victory. Final attempts:");
+        print(attempts);
+    else
+        print("========================================");
+        print("Game over. The secret number was:");
+        print(secret);
+    endif
+
+    return 0;
+}
