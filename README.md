@@ -48,6 +48,9 @@ Default mode is `--emit-tesvm`. When an input file is provided, the compiler wri
 Useful file-based commands:
 
 ```sh
+tes hello.tes
+tes --force hello.tes
+tes --trace hello.tes
 tesc hello.tes
 tesvm target/tesvm/hello.tesvm
 tesc -o build/hello.tesvm hello.tes
@@ -64,20 +67,28 @@ For detailed build, run, cross-compilation, and output-file instructions, see [R
 Build with scripts:
 
 ```powershell
-.\scripts\build-windows.ps1
-.\scripts\build-vm-windows.ps1
+.\scripts\windows\build-all.ps1
+.\scripts\windows\build-tes.ps1
+.\scripts\windows\build-tesc.ps1
+.\scripts\windows\build-tesvm.ps1
 ```
 
 ```sh
-./scripts/build-linux.sh
-./scripts/build-macos.sh
-./scripts/build-vm-linux.sh
-./scripts/build-vm-macos.sh
+./scripts/linux/build-all.sh
+./scripts/linux/build-tes.sh
+./scripts/linux/build-tesc.sh
+./scripts/linux/build-tesvm.sh
+
+./scripts/macos/build-all.sh
+./scripts/macos/build-tes.sh
+./scripts/macos/build-tesc.sh
+./scripts/macos/build-tesvm.sh
 ```
 
 Or build manually:
 
 ```sh
+go build -o bin/tes ./cmd/tes
 go build -o bin/tesc ./cmd/teslang
 go build -o bin/tesvm ./cmd/tesvm
 ```
@@ -86,13 +97,16 @@ On Windows PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force .\bin | Out-Null
+go build -o .\bin\tes.exe .\cmd\tes
 go build -o .\bin\tesc.exe .\cmd\teslang
 go build -o .\bin\tesvm.exe .\cmd\tesvm
 ```
 
 Generated binaries are written to `bin/`. Generated TESVM files are written to `target/tesvm` by default. Cross-compiled release binaries can be written to `dist/`; these generated directories are ignored by Git.
 
-The build scripts create both `tesc` and `tesvm`.
+The main build scripts create `tes`, `tesc`, and `tesvm`. `tes` compiles a `.tes` source when needed and immediately runs the generated `.tesvm`.
+
+`tes` recompiles when the generated `.tesvm` file is missing or older than the `.tes` source. Use `--force` to recompile unconditionally.
 
 ## Test
 

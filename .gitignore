@@ -12,6 +12,7 @@ target/
 *.test
 *.out
 /tesc
+/tes
 /teslang
 /tesvm
 
