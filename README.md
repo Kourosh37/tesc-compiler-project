@@ -1,6 +1,6 @@
 # TesLang Compiler
 
-TesLang Compiler is a small educational compiler written in Go. It can compile `.tes` files into text TSVM-style intermediate code, print tokens, and run syntax and semantic checks.
+TesLang Compiler is a small educational compiler written in Go. It can compile `.tes` files into text TSVM-style intermediate code, print tokens, run syntax and semantic checks, and execute generated `.tsvm` files with the bundled VM.
 
 ## Language Features
 
@@ -21,6 +21,7 @@ TesLang Compiler is a small educational compiler written in Go. It can compile `
 4. AST construction.
 5. Semantic analyzer with nested symbol tables.
 6. Text TSVM code generator.
+7. TSVM parser and virtual machine runtime.
 
 ## Run
 
@@ -48,6 +49,7 @@ Useful file-based commands:
 
 ```sh
 tesc hello.tes
+tsvm target/tsvm/hello.tsvm
 tesc -o build/hello.tsvm hello.tes
 tesc --out-dir build src/a.tes src/b.tes
 tesc --stdout hello.tes
@@ -74,6 +76,7 @@ Or build manually:
 
 ```sh
 go build -o bin/tesc ./cmd/teslang
+go build -o bin/tsvm ./cmd/tsvm
 ```
 
 On Windows PowerShell:
@@ -81,9 +84,12 @@ On Windows PowerShell:
 ```powershell
 New-Item -ItemType Directory -Force .\bin | Out-Null
 go build -o .\bin\tesc.exe .\cmd\teslang
+go build -o .\bin\tsvm.exe .\cmd\tsvm
 ```
 
 Generated binaries are written to `bin/`. Generated TSVM files are written to `target/tsvm` by default. Cross-compiled release binaries can be written to `dist/`; these generated directories are ignored by Git.
+
+The build scripts create both `tesc` and `tsvm`.
 
 ## Test
 
@@ -132,10 +138,11 @@ proc main
 - Used `null` as the void-like type.
 - Treats `vector` as `array<int>`.
 - Emits a readable text-based TSVM intermediate representation.
+- Executes TSVM with a small register-based VM.
 - Nested function code generation uses name mangling such as `outer__inner`.
 
 ## Limitations
 
 - Nested functions are emitted with name mangling, but full closure conversion is not implemented.
-- TSVM vector operations use pseudo instructions such as `vector`, `loadidx`, and `storeidx`.
+- TSVM vector operations use VM-supported pseudo instructions such as `vector`, `loadidx`, and `storeidx`.
 - Logical operators currently emit eager `and`/`or` instructions.

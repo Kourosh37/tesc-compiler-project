@@ -2,15 +2,19 @@ $ErrorActionPreference = "Stop"
 
 $Root = Split-Path -Parent $PSScriptRoot
 $Bin = Join-Path $Root "bin"
-$Output = Join-Path $Bin "tesc.exe"
+$Compiler = Join-Path $Bin "tesc.exe"
+$VM = Join-Path $Bin "tsvm.exe"
 
 New-Item -ItemType Directory -Force $Bin | Out-Null
 
 Push-Location $Root
 try {
-    go build -o $Output .\cmd\teslang
-    Write-Host "Built $Output"
+    go build -o $Compiler .\cmd\teslang
+    go build -o $VM .\cmd\tsvm
+    Write-Host "Built $Compiler"
+    Write-Host "Built $VM"
     Write-Host "Usage: .\bin\tesc.exe .\path\to\file.tes"
+    Write-Host "Run:   .\bin\tsvm.exe .\target\tsvm\path\to\file.tsvm"
 } finally {
     Pop-Location
 }

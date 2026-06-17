@@ -13,6 +13,7 @@ target/
 *.out
 /tesc
 /teslang
+/tsvm
 
 # Go tooling and coverage
 coverage/

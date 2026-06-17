@@ -3,13 +3,17 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BIN="$ROOT/bin"
-OUTPUT="$BIN/tesc"
+COMPILER="$BIN/tesc"
+VM="$BIN/tsvm"
 
 mkdir -p "$BIN"
 
 cd "$ROOT"
-GOOS=darwin GOARCH="${GOARCH:-arm64}" go build -o "$OUTPUT" ./cmd/teslang
-chmod +x "$OUTPUT"
+GOOS=darwin GOARCH="${GOARCH:-arm64}" go build -o "$COMPILER" ./cmd/teslang
+GOOS=darwin GOARCH="${GOARCH:-arm64}" go build -o "$VM" ./cmd/tsvm
+chmod +x "$COMPILER" "$VM"
 
-echo "Built $OUTPUT"
+echo "Built $COMPILER"
+echo "Built $VM"
 echo "Usage: ./bin/tesc ./path/to/file.tes"
+echo "Run:   ./bin/tsvm ./target/tsvm/path/to/file.tsvm"
