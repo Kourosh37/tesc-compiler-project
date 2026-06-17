@@ -1,4 +1,4 @@
-package tsvm
+package tesvm
 
 import (
 	"strings"

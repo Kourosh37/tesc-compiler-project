@@ -16,14 +16,14 @@ import (
 	"teslang-compiler/internal/token"
 )
 
-const defaultOutputDir = "target/tsvm"
+const defaultOutputDir = "target/tesvm"
 
 type mode int
 
 const (
 	modeTokens mode = iota
 	modeCheck
-	modeEmitTSVM
+	modeEmitTESVM
 )
 
 type options struct {
@@ -36,7 +36,7 @@ type options struct {
 func main() {
 	tokensFlag := flag.Bool("tokens", false, "tokenize only")
 	checkFlag := flag.Bool("check", false, "check syntax and semantics")
-	emitFlag := flag.Bool("emit-tsvm", false, "emit TSVM")
+	emitFlag := flag.Bool("emit-tesvm", false, "emit TESVM")
 	outputFlag := flag.String("o", "", "output file path; only valid with one input file")
 	outDirFlag := flag.String("out-dir", "", "output directory for generated files")
 	stdoutFlag := flag.Bool("stdout", false, "write generated output to stdout")
@@ -49,11 +49,11 @@ func main() {
 		}
 	}
 	if selectedModes > 1 {
-		fmt.Fprintln(os.Stderr, "use only one of --tokens, --check, or --emit-tsvm")
+		fmt.Fprintln(os.Stderr, "use only one of --tokens, --check, or --emit-tesvm")
 		os.Exit(2)
 	}
 
-	opts := options{mode: modeEmitTSVM, output: *outputFlag, outDir: *outDirFlag, stdout: *stdoutFlag}
+	opts := options{mode: modeEmitTESVM, output: *outputFlag, outDir: *outDirFlag, stdout: *stdoutFlag}
 	if *tokensFlag {
 		opts.mode = modeTokens
 	}
@@ -61,10 +61,10 @@ func main() {
 		opts.mode = modeCheck
 	}
 	if !*tokensFlag && !*checkFlag && !*emitFlag {
-		opts.mode = modeEmitTSVM
+		opts.mode = modeEmitTESVM
 	}
 	if *emitFlag {
-		opts.mode = modeEmitTSVM
+		opts.mode = modeEmitTESVM
 	}
 	if err := validateOptions(opts, flag.Args()); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -93,8 +93,8 @@ func validateOptions(opts options, inputs []string) error {
 	if opts.output != "" && len(inputs) != 1 {
 		return fmt.Errorf("-o requires exactly one input file")
 	}
-	if (opts.output != "" || opts.outDir != "") && opts.mode != modeEmitTSVM {
-		return fmt.Errorf("-o and --out-dir are only valid with --emit-tsvm")
+	if (opts.output != "" || opts.outDir != "") && opts.mode != modeEmitTESVM {
+		return fmt.Errorf("-o and --out-dir are only valid with --emit-tesvm")
 	}
 	return nil
 }
@@ -133,7 +133,7 @@ func run(opts options, inputs []string) error {
 }
 
 func outputPath(input string, opts options) (string, error) {
-	if opts.mode != modeEmitTSVM || opts.stdout {
+	if opts.mode != modeEmitTESVM || opts.stdout {
 		return "", nil
 	}
 	if opts.output != "" {
@@ -157,7 +157,7 @@ func outputName(input string) string {
 		clean = filepath.Base(clean)
 	}
 	ext := filepath.Ext(clean)
-	return strings.TrimSuffix(clean, ext) + ".tsvm"
+	return strings.TrimSuffix(clean, ext) + ".tesvm"
 }
 
 func process(name, src, outPath string, opts options, single bool) error {

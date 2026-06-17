@@ -1,4 +1,4 @@
-package tsvm
+package tesvm
 
 type Program struct {
 	Procedures map[string]*Procedure

@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"teslang-compiler/internal/tsvm"
+	"teslang-compiler/internal/tesvm"
 )
 
 func main() {
@@ -28,16 +28,16 @@ func main() {
 		r = f
 		name = flag.Arg(0)
 	} else {
-		fmt.Fprintln(os.Stderr, "usage: tsvm [--entry main] [--trace] [file.tsvm]")
+		fmt.Fprintln(os.Stderr, "usage: tesvm [--entry main] [--trace] [file.tesvm]")
 		os.Exit(2)
 	}
 
-	prog, err := tsvm.Parse(r)
+	prog, err := tesvm.Parse(r)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s: %v\n", name, err)
 		os.Exit(1)
 	}
-	code, err := tsvm.NewVM(prog, tsvm.WithInput(os.Stdin), tsvm.WithOutput(os.Stdout), tsvm.WithTrace(*trace)).Run(*entry)
+	code, err := tesvm.NewVM(prog, tesvm.WithInput(os.Stdin), tesvm.WithOutput(os.Stdout), tesvm.WithTrace(*trace)).Run(*entry)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s: %v\n", name, err)
 		os.Exit(1)

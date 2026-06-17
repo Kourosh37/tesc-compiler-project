@@ -13,7 +13,7 @@ target/
 *.out
 /tesc
 /teslang
-/tsvm
+/tesvm
 
 # Go tooling and coverage
 coverage/
@@ -24,8 +24,8 @@ coverage.html
 cpu.out
 mem.out
 
-# TesLang / TSVM generated outputs
-*.tsvm
+# TesLang / TESVM generated outputs
+*.tesvm
 *.tokens
 *.diag
 
