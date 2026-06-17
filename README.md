@@ -62,6 +62,8 @@ tesc --tokens hello.tes
 
 For detailed build, run, cross-compilation, and output-file instructions, see [RUNBOOK.md](RUNBOOK.md).
 
+For full language documentation, see [teslang_docs](teslang_docs/README.md).
+
 ## Build
 
 Build with scripts:
