@@ -18,7 +18,7 @@ go test ./...
 
 ## Run From Source
 
-Default mode emits TSVM. With file inputs, output is written next to each source file as `.tsvm`.
+Default mode emits TSVM. With file inputs, output is written under `target/tsvm`.
 
 ### PowerShell
 
@@ -125,9 +125,10 @@ GOOS=darwin  GOARCH=arm64 go build -o dist/tesc-darwin-arm64 ./cmd/teslang
 
 - `bin/tesc` or `bin/tesc.exe`: built compiler for your current OS
 - `dist/*`: cross-compiled release binaries
-- `*.tsvm`: generated TSVM intermediate code
+- `target/tsvm/**/*.tsvm`: default generated TSVM intermediate code
+- `*.tsvm`: generated TSVM files from custom output paths
 
-`bin/`, `dist/`, and `*.tsvm` are ignored by Git.
+`bin/`, `dist/`, `target/`, and `*.tsvm` are ignored by Git.
 
 ## Important
 

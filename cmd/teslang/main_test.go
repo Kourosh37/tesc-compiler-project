@@ -2,12 +2,22 @@ package main
 
 import "testing"
 
-func TestOutputPathDefaultsNextToInput(t *testing.T) {
+func TestOutputPathDefaultsToTargetDirectory(t *testing.T) {
 	got, err := outputPath("samples/hello.tes", options{mode: modeEmitTSVM})
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got != "samples\\hello.tsvm" && got != "samples/hello.tsvm" {
+	if got != "target\\tsvm\\samples\\hello.tsvm" && got != "target/tsvm/samples/hello.tsvm" {
+		t.Fatalf("unexpected output path: %q", got)
+	}
+}
+
+func TestOutputPathUsesCustomOutputDirectory(t *testing.T) {
+	got, err := outputPath("samples/hello.tes", options{mode: modeEmitTSVM, outDir: "out"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got != "out\\samples\\hello.tsvm" && got != "out/samples/hello.tsvm" {
 		t.Fatalf("unexpected output path: %q", got)
 	}
 }

@@ -42,7 +42,7 @@ go run ./cmd/teslang --check < testdata/semantic_errors.tes
 go run ./cmd/teslang --emit-tsvm < testdata/codegen_sample.tes
 ```
 
-Default mode is `--emit-tsvm`. When an input file is provided, the compiler writes a `.tsvm` file next to it.
+Default mode is `--emit-tsvm`. When an input file is provided, the compiler writes generated TSVM under `target/tsvm`.
 
 Useful file-based commands:
 
@@ -83,7 +83,7 @@ New-Item -ItemType Directory -Force .\bin | Out-Null
 go build -o .\bin\tesc.exe .\cmd\teslang
 ```
 
-Generated binaries are written to `bin/`. Cross-compiled release binaries can be written to `dist/`; both directories are ignored by Git.
+Generated binaries are written to `bin/`. Generated TSVM files are written to `target/tsvm` by default. Cross-compiled release binaries can be written to `dist/`; these generated directories are ignored by Git.
 
 ## Test
 

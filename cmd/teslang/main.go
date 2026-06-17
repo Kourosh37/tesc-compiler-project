@@ -16,6 +16,8 @@ import (
 	"teslang-compiler/internal/token"
 )
 
+const defaultOutputDir = "target/tsvm"
+
 type mode int
 
 const (
@@ -137,14 +139,25 @@ func outputPath(input string, opts options) (string, error) {
 	if opts.output != "" {
 		return opts.output, nil
 	}
-	base := strings.TrimSuffix(filepath.Base(input), filepath.Ext(input)) + ".tsvm"
+	name := outputName(input)
 	if opts.outDir != "" {
 		if err := os.MkdirAll(opts.outDir, 0755); err != nil {
 			return "", err
 		}
-		return filepath.Join(opts.outDir, base), nil
+		return filepath.Join(opts.outDir, name), nil
 	}
-	return filepath.Join(filepath.Dir(input), base), nil
+	return filepath.Join(defaultOutputDir, name), nil
+}
+
+func outputName(input string) string {
+	clean := filepath.Clean(input)
+	if rel, err := filepath.Rel(".", clean); err == nil && !strings.HasPrefix(rel, ".."+string(filepath.Separator)) && rel != ".." && !filepath.IsAbs(rel) {
+		clean = rel
+	} else {
+		clean = filepath.Base(clean)
+	}
+	ext := filepath.Ext(clean)
+	return strings.TrimSuffix(clean, ext) + ".tsvm"
 }
 
 func process(name, src, outPath string, opts options, single bool) error {
